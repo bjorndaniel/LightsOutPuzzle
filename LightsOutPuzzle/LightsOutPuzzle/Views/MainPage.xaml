@@ -4,11 +4,5 @@
              xmlns:local="clr-namespace:LightsOutPuzzle"
              x:Class="LightsOutPuzzle.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
-    </StackLayout>
 
 </ContentPage>
