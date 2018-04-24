@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Ooui" Version="0.10.222" />
+    <PackageReference Include="Ooui.AspNetCore" Version="0.10.222" />
+    <PackageReference Include="Ooui.Forms" Version="0.10.222" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LightsOutPuzzle\LightsOutPuzzle\LightsOutPuzzle.csproj" />
+  </ItemGroup>
+
+</Project>
