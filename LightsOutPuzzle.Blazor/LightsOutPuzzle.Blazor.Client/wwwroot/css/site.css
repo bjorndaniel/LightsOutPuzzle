@@ -141,6 +141,10 @@ app {
 .small-text{
     font-size: x-small;
 }
+.img-tile{
+    max-width: 50px;
+    max-height: 50px;
+}
 
 /*From: https://davidwalsh.name/css-flip */
 .flip-container {
@@ -148,17 +152,16 @@ app {
     transform-style: preserve-3d;
 }
     /*  UPDATED! flip the pane when hovered */
-    .flip-container:hover .back {
+    .flip .back {
         transform: rotateY(0deg);
     }
 
-    .flip-container:hover .front {
+    .flip .front {
         transform: rotateY(180deg);
     }
-
 .flip-container, .front, .back {
-    width: 320px;
-    height: 480px;
+    width: 50px;
+    height: 50px;
 }
 
 /* flip speed goes here */

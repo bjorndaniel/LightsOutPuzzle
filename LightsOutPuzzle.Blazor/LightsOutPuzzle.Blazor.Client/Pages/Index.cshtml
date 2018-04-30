@@ -15,13 +15,13 @@
                 @for (int col = 0; col < 5; col++)
                 {
                     <td class="tile">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                        <div class="flip-container" id="@($"row-{row+1}-col-{col+1}")">
                             <div class="flipper">
                                 <div class="front">
                                     <!-- front content -->
                                 </div>
                                 <div class="back">
-                                    <!-- back content -->
+                                    <img class="img-tile" src="@($"images/row-{row+1}-col-{col+1}.jpg")">
                                 </div>
                             </div>
                         </div>
