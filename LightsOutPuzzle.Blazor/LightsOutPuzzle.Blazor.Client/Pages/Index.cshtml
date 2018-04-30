@@ -1,0 +1,56 @@
+﻿@page "/"
+<div class="row">
+    <div class="col-sm text-center">
+        <h3>
+            A Xamarin.Forms game based on 'Lights Out' with a Marvel-twist.
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm">
+        <table class="playing-field">
+            @for (int row = 0; row < 5; row++)
+            {
+            <tr>
+                @for (int col = 0; col < 5; col++)
+                {
+                    <td class="tile">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <!-- front content -->
+                                </div>
+                                <div class="back">
+                                    <!-- back content -->
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm text-center">
+        <button class="btn btn-primary">Start game</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm text-center">
+        <h5>
+            Click on a tile to adjust the state of tile and the direct adjecent ones.
+        </h5>
+        <h5>
+            Keep on clicking to reveal the complete Marvel picture.
+        </h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm text-center">
+        <p class="small-text">
+            Created by Marcofolio.net based on the electronic game 'Lights Out' from 1995 by Tiger Electronics. Picture used from Marvels 'Avengers: Infinity War' 2018 movie.
+        </p>
+    </div>
+</div>
