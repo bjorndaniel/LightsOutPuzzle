@@ -1,25 +1,32 @@
 ﻿using LightsOutPuzzle.Helpers;
 using LightsOutPuzzle.ViewModels;
 using LightsOutPuzzle.Views;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace LightsOutPuzzle
 {
     public partial class MainPage : ContentPage
-	{
+    {
         private GameViewModel _model;
-
         private Grid _playingField;
+        private TilePage[,] _tiles;
 
-		public MainPage()
-		{
-			InitializeComponent();
+        public MainPage()
+        {
+            InitializeComponent();
             _model = new GameViewModel();
             _model.PropertyChanged += OnViewModelPropertyChanged;
             BindingContext = _model;
-            
+            _tiles = new TilePage[5, 5];
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             CreateLayout();
-		}
+        }
 
         private void CreateLayout()
         {
@@ -51,13 +58,13 @@ namespace LightsOutPuzzle
             }
 
             // Create the tiles
-            for (var x = 0; x < 5; x++)
+            for (var row = 0; row < 5; row++)
             {
-                for (var y = 0; y < 5; y++)
+                for (var col = 0; col < 5; col++)
                 {
-                    var tile = new Tile(x, y);
-                    _model.AddTile(tile);
-                    _playingField.Children.Add(tile, x, y);
+                    var tile = new TilePage(row, col);
+                    _tiles[row, col] = tile;
+                    _playingField.Children.Add(tile, col, row);
                 }
             }
 
@@ -95,24 +102,46 @@ namespace LightsOutPuzzle
             Content = layout;
         }
 
-        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+
             if (e.PropertyName == "IsFinished" && _model.IsFinished)
             {
-                DisplayAlert("Done", "Well done, the Avengers are proud!", "OK");
+                await DisplayAlert("Done", "Well done, the Avengers are proud!", "OK");
             }
 
             if (e.PropertyName == "IsActive")
             {
                 if (_model.IsActive)
                 {
-                    _playingField.FadeTo(1);
+                    await _playingField.FadeTo(1);
                 }
                 else
                 {
-                    _playingField.FadeTo(0.5);
+                    await _playingField.FadeTo(0.5);
                 }
             }
+
+            if (e.PropertyName == "TilesToFlip")
+            {
+                await FlipTiles();
+            }
+        }
+
+        private async Task FlipTiles()
+        {
+            _model.IsAnimating = true;
+            var flips = new List<Task>();
+            foreach (var t in _model.GetTiles())
+            {
+                var gameTile = _tiles[t.Row, t.Column];
+                if (gameTile.FrontIsShowing != t.ImageVisible)
+                {
+                    flips.Add(gameTile.Flip());
+                }
+            }
+            await Task.WhenAll(flips);
+            _model.IsAnimating = false;
         }
     }
 }

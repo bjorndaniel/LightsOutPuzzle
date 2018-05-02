@@ -1,41 +1,37 @@
 ﻿using LightsOutPuzzle.Helpers;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace LightsOutPuzzle.Views
 {
-    public class Tile : Grid
+    public class TilePage : Grid
     {
-
         private BoxView _background;
         private Image _foreground;
 
-        public event EventHandler<TileTappedEventArgs> Tapped;
+        public int Column { get; }
 
-        public int XPos { get; }
-
-        public int YPos { get; }
+        public int Row { get; }
 
         public bool FrontIsShowing { get; private set; }
 
-        public Tile(int xPos, int yPos)
+        public TilePage(int row, int column)
         {
-            XPos = xPos;
-            YPos = yPos;
+            Column = column;
+            Row = row;
             // Background
             _background = new BoxView { Color = Constants.BACKSIZE_COLOR };
-            var assembly = typeof(Tile).GetTypeInfo().Assembly;
+            var assembly = typeof(TilePage).GetTypeInfo().Assembly;
             // Foreground
             _foreground = new Image
             {
                 RotationY = -90,
-                Source = ImageSource.FromResource($"LightsOutPuzzle.Images.row-{yPos + 1}-col-{xPos + 1}.jpg", assembly),
+                Source = ImageSource.FromResource($"LightsOutPuzzle.Images.row-{row + 1}-col-{column + 1}.jpg", assembly),
                 Opacity = 0,
-                BackgroundColor = Color.Black
-            
+                BackgroundColor = Color.Red
+
             };
             // Tapframe
             var tapFrame = CreateTapFrame();
@@ -50,10 +46,7 @@ namespace LightsOutPuzzle.Views
         {
             if (FrontIsShowing)
             {
-                await _foreground.RotateYTo(-90, 400, Easing.CubicIn);
-                _foreground.Opacity = 0;
-                await _background.RotateYTo(0, 400, Easing.CubicOut);
-                FrontIsShowing = false;
+                ShowBack();
             }
             else
             {
@@ -62,6 +55,22 @@ namespace LightsOutPuzzle.Views
                 await _foreground.RotateYTo(0, 400, Easing.CubicOut);
                 FrontIsShowing = true;
             }
+        }
+
+        public async Task Reset()
+        {
+            if (FrontIsShowing)
+            {
+                await ShowBack();
+            }
+        }
+
+        private async Task ShowBack()
+        {
+            await _foreground.RotateYTo(-90, 400, Easing.CubicIn);
+            _foreground.Opacity = 0;
+            await _background.RotateYTo(0, 400, Easing.CubicOut);
+            FrontIsShowing = false;
         }
 
         private Frame CreateTapFrame()
@@ -75,15 +84,11 @@ namespace LightsOutPuzzle.Views
                 VerticalOptions = LayoutOptions.Center,
                 HasShadow = false
             };
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += OnFrameTapped;
-            frame.GestureRecognizers.Add(tapGestureRecognizer);
+            var tgr = new TapGestureRecognizer();
+            tgr.SetBinding(TapGestureRecognizer.CommandProperty, "TileTappedCommand");
+            tgr.SetBinding(TapGestureRecognizer.CommandParameterProperty, new Binding { Source = new TileTappedEventArgs { Row = Row, Column = Column } });
+            frame.GestureRecognizers.Add(tgr);
             return frame;
-        }
-
-        protected virtual void OnFrameTapped(object sender, EventArgs e)
-        {
-            Tapped?.Invoke(this, new TileTappedEventArgs { XPos = XPos, YPos = YPos });
         }
     }
 }

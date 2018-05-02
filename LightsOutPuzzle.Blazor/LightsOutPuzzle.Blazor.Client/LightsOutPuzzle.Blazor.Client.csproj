@@ -17,4 +17,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0-preview1-10247" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\LightsOutPuzzle.Common\LightsOutPuzzle.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\jsinterop.js" />
+  </ItemGroup>
+
 </Project>
