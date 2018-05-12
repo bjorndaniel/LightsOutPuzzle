@@ -25,6 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightsOutPuzzle.Common", "L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{C0B132FA-CD1E-406A-9121-46985BBCD971}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ooui-fork", "Ooui-fork", "{46667AC0-BE8B-4275-97D9-CEDFFA6E4107}"
+	ProjectSection(SolutionItems) = preProject
+		Ooui.AspNetCore.dll = Ooui.AspNetCore.dll
+		Ooui.dll = Ooui.dll
+		Ooui.Forms.dll = Ooui.Forms.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
