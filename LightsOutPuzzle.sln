@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightsOutPuzzle.iOS", "Ligh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightsOutPuzzle.UWP", "LightsOutPuzzle\LightsOutPuzzle.UWP\LightsOutPuzzle.UWP.csproj", "{5E9C75D3-7724-466E-B82D-9781534ED19E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ooui", "Ooui", "{B8C4E744-7E68-460D-850C-DFF0762C5CC0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ooui-Core", "Ooui-Core", "{B8C4E744-7E68-460D-850C-DFF0762C5CC0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightsOutPuzzle.Ooui", "LightsOutPuzzle.Ooui\LightsOutPuzzle.Ooui.csproj", "{317C94AE-CD14-4D9A-A817-BE027D0E2DD7}"
 EndProject

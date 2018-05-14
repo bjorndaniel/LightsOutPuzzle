@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LightsOutPuzzle.Ooui
+namespace LightsOutPuzzleOoui
 {
     public class Startup
     {

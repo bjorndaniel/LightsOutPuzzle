@@ -18,14 +18,12 @@
                         var tile = CurrentGame.GetTile(row, col);
                         <td class="tile" onclick="@(() => FlipTile(tile))">
                             <div class="flip-container" id="@($"row-{row+1}-col-{col+1}")">
-                                <div class="flipper">
                                     <div class="@(tile.ImageVisible ? "back" : "front")">
                                         <!-- front content -->
                                     </div>
                                     <div class="@(tile.ImageVisible ? "front" : "back")">
                                         <img class="img-tile" src="@($"images/row-{row+1}-col-{col+1}.jpg")">
                                     </div>
-                                </div>
                             </div>
                         </td>
                     }

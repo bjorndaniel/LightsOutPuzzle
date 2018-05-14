@@ -19,6 +19,7 @@ namespace LightsOutPuzzle.Views
 
         public TilePage(int row, int column)
         {
+            StyleId = "flip-container";
             Column = column;
             Row = row;
             // Background
@@ -29,16 +30,21 @@ namespace LightsOutPuzzle.Views
             {
                 RotationY = -90,
                 Source = ImageSource.FromResource($"LightsOutPuzzle.Images.row-{row + 1}-col-{column + 1}.jpg", assembly),
-                Opacity = 0,
+                //Opacity = 0,
                 BackgroundColor = Color.Red
 
             };
+            _background.StyleId = "back";
+            _foreground.StyleId = "front";
             // Tapframe
             var tapFrame = CreateTapFrame();
             // The Background, Foreground and tapGrid are placed in the same Cell of the Grid
             // which causes them to stack on top of eachother
+            //var g = new Grid();
+            //g.StyleId = "flipper";
             Children.Add(_background, 0, 0);
             Children.Add(_foreground, 0, 0);
+            //Children.Add(g);
             Children.Add(tapFrame, 0, 0);
         }
 
@@ -46,13 +52,14 @@ namespace LightsOutPuzzle.Views
         {
             if (FrontIsShowing)
             {
-                ShowBack();
+               await ShowBack();
             }
             else
             {
                 await _background.RotateYTo(90, 400, Easing.CubicIn);
-                _foreground.Opacity = 1;
                 await _foreground.RotateYTo(0, 400, Easing.CubicOut);
+                _background.StyleId = "back";
+                _foreground.StyleId = "front";
                 FrontIsShowing = true;
             }
         }
@@ -68,8 +75,9 @@ namespace LightsOutPuzzle.Views
         private async Task ShowBack()
         {
             await _foreground.RotateYTo(-90, 400, Easing.CubicIn);
-            _foreground.Opacity = 0;
             await _background.RotateYTo(0, 400, Easing.CubicOut);
+            _background.StyleId = "front";
+            _foreground.StyleId = "back";
             FrontIsShowing = false;
         }
 
@@ -82,7 +90,7 @@ namespace LightsOutPuzzle.Views
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                HasShadow = false
+                HasShadow = false,
             };
             var tgr = new TapGestureRecognizer();
             tgr.SetBinding(TapGestureRecognizer.CommandProperty, "TileTappedCommand");
