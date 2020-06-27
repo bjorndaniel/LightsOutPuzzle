@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto d-none d-md-block">
+        <div class="inner">
+            
+           <a href="/"><h3 class="masthead-brand">Lights out</h3></a>
+        </div>
+    </header>
+    @Body
+    <footer class="mastfoot mt-auto text-center">
+        <div class="inner">
+            <p><a href="https://github.com/bjorndaniel/lightsoutpuzzle" target="_blank">Checkout the code on github</a></p>
+        </div>
+    </footer>
+    <BlazoredToasts Position="ToastPosition.TopCenter"
+                Timeout="10"
+                />
+</div>

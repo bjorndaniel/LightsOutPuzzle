@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="LightsOutPuzzle.Xam.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:magicGradients="clr-namespace:MagicGradients;assembly=MagicGradients"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Application.Resources>
+        <ControlTemplate x:Key="PageWithGradient">
+            <Grid>
+                <magicGradients:GradientView VerticalOptions="FillAndExpand">
+                    <magicGradients:GradientView.GradientSource>
+                        <magicGradients:LinearGradient Angle="0">
+                            <magicGradients:GradientStop Offset="0" Color="#111" />
+                            <magicGradients:GradientStop Offset="1" Color="#555" />
+                        </magicGradients:LinearGradient>
+                    </magicGradients:GradientView.GradientSource>
+                </magicGradients:GradientView>
+                <ContentPresenter />
+            </Grid>
+        </ControlTemplate>
+        <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+            <Setter Property="ControlTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <magicGradients:GradientView VerticalOptions="FillAndExpand">
+                                <magicGradients:GradientView.GradientSource>
+                                    <magicGradients:LinearGradient Angle="0">
+                                        <magicGradients:GradientStop Offset="0" Color="#111" />
+                                        <magicGradients:GradientStop Offset="1" Color="#555" />
+                                    </magicGradients:LinearGradient>
+                                </magicGradients:GradientView.GradientSource>
+                            </magicGradients:GradientView>
+                            <ContentPresenter />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BackgroundColor" Value="#007bff" />
+        </Style>
+    </Application.Resources>
+</Application>
