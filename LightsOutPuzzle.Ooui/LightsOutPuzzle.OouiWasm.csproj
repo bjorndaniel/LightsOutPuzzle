@@ -6,16 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MagicGradients" Version="1.1.0" />
     <PackageReference Include="Ooui" Version="0.12.309" />
-    <PackageReference Include="Ooui.AspNetCore" Version="0.12.309" />
     <PackageReference Include="Ooui.Wasm" Version="0.12.309" />
-    <PackageReference Include="Ooui.Forms" Version="0.12.309" />
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LightsOutPuzzle.Xam\LightsOutPuzzle.Xam\LightsOutPuzzle.Xam.csproj" />
+    <ProjectReference Include="..\LightsOutPuzzle.Common\LightsOutPuzzle.Common.csproj" />
   </ItemGroup>
+
 
 </Project>

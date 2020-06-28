@@ -20,12 +20,12 @@
                         var tile = CurrentGame.GetTile(row, col);
                         <td class="tile" @onclick="@(() => FlipTile(tile))">
                             <div class="flip-container" id="@($"row-{row+1}-col-{col+1}")">
-                                    <div class="@(tile.ImageVisible ? "back" : "front")">
-                                        <!-- front content -->
-                                    </div>
-                                    <div class="@(tile.ImageVisible ? "front" : "back")">
-                                        <img class="img-tile" src="@($"img/row-{row+1}-col-{col+1}.jpg")">
-                                    </div>
+                                <div class="@(tile.ImageVisible ? "back" : "front")">
+                                    <!-- front content -->
+                                </div>
+                                <div class="@(tile.ImageVisible ? "front" : "back")">
+                                    <img class="img-tile" src="@($"img/row-{row+1}-col-{col+1}.jpg")">
+                                </div>
                             </div>
                         </td>
                     }
@@ -34,8 +34,7 @@
         </table>
     </div>
 </div>
-<br />
-<div class="row">
+<div class="row mt-1">
     <div class="col text-center">
         <button class="btn btn-primary" @onclick="@StartGame">@ButtonText</button>
     </div>
