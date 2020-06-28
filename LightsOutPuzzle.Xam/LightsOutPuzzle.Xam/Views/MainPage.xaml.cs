@@ -58,13 +58,13 @@ namespace LightsOutPuzzle.Xam.Views
             {
                 for (var col = 0; col < 5; col++)
                 {
-                    var tile = new TilePage(row, col);
+                    var tile = new TilePage(row, col, "LightsOutPuzzle.Xam");
                     _tiles[row, col] = tile;
                     _playingField.Children.Add(tile, col, row);
                 }
             }
 
-            var startButton = new Button()
+            var startButton = new Button
             {
                 HorizontalOptions = LayoutOptions.Center
             };
@@ -75,7 +75,7 @@ namespace LightsOutPuzzle.Xam.Views
             {
                 HorizontalTextAlignment = TextAlignment.Center,
                 Margin = 20,
-                Text = "Click on a tile to adjust the state of tile and the direct adject ones. Keep on clicking to reveal the complete Marvel picture."
+                Text = "Click on a tile to adjust the state of the tile and the direct adjacenct ones. Keep on clicking to reveal the complete Marvel picture."
             };
 
             var notes = new Label()

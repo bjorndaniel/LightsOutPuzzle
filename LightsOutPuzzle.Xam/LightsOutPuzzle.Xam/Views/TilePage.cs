@@ -16,26 +16,28 @@ namespace LightsOutPuzzle.Xam.Views
 
         public bool FrontIsShowing { get; private set; }
 
-        public TilePage(int row, int column)
+        public TilePage(int row, int column, string assemblyName)
         {
             StyleId = "flip-container";
             Column = column;
             Row = row;
             var assembly = typeof(TilePage).GetTypeInfo().Assembly;
-            _background = new BoxView { Color = Constants.BACKSIZE_COLOR };
+            _background = new BoxView { Color = Constants.BACKSIZE_COLOR, RotationY = 90 };
             _foreground = new Image
             {
-                RotationY = -90,
-                Source = ImageSource.FromResource($"LightsOutPuzzle.Xam.Images.row-{row + 1}-col-{column + 1}.jpg", assembly),
-                BackgroundColor = Color.Red
+                RotationY = 0,
+                Source = ImageSource.FromResource($"{assemblyName}.Images.row-{row + 1}-col-{column + 1}.jpg", assembly),
+                BackgroundColor = Color.Transparent
 
             };
+            
             _background.StyleId = "back";
             _foreground.StyleId = "front";
             var tapFrame = CreateTapFrame();
             Children.Add(_background, 0, 0);
             Children.Add(_foreground, 0, 0);
             Children.Add(tapFrame, 0, 0);
+            FrontIsShowing = true;
         }
 
         public async Task Flip()

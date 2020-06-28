@@ -9,10 +9,11 @@ namespace LightsOutPuzzle.Common
         private static Random _random = new Random();
         private List<Tile> _playingField;
 
-        internal Game()
+        internal Game(bool finished = false)
         {
-            CreateGame();
+            CreateGame(finished);
         }
+
 
         public Tile GetTile(int row, int column) =>
             _playingField.First(_ => _.Row == row && _.Column == column);
@@ -74,14 +75,16 @@ namespace LightsOutPuzzle.Common
 
         public static Game RandomGame() => new Game();
 
-        private void CreateGame()
+        public static Game FinishedGame() => new Game(true);
+
+        private void CreateGame(bool finished = false)
         {
             _playingField = new List<Tile>();
             for (int row = 0; row < 5; row++)
             {
                 for (int col = 0; col < 5; col++)
                 {
-                    _playingField.Add(new Tile(row, col, _random.Next(0, 100) > 30));
+                    _playingField.Add(new Tile(row, col, finished || _random.Next(0, 100) > 30));
                 }
             }
         }

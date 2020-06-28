@@ -5,7 +5,7 @@ The goal is to do the list below:
 
 - Blazor Web Assembly **DONE**
 - Xamarin Forms iOS/android/UWP **DONE**
-- Fabolous iOS/android/UWP/WPF/Gdk/macOS
+- Fabulous iOS/android/UWP/WPF/Gdk/macOS
 - Flutter
 - Ooui Web Assembly
 - Vue with TypeScript

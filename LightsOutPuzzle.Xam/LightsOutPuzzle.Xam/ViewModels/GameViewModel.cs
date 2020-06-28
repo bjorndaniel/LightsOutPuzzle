@@ -52,6 +52,7 @@ namespace LightsOutPuzzle.Xam.ViewModels
 
         public GameViewModel()
         {
+            _game = Game.FinishedGame();
             ButtonText = "Start game";
             StartCommand = new Command(StartGame);
             TileTappedCommand = new Command<TileTappedEventArgs>(TileTapped);
