@@ -7,6 +7,7 @@ The goal is to do the list below:
 - Xamarin Forms iOS/android/UWP **DONE**
 - Fabulous iOS/android/UWP **DONE**
 - Flutter
+- Uno
 - Ooui Web Assembly
 - Vue with TypeScript
 - React
