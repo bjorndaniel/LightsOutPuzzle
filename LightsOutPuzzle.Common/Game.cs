@@ -14,7 +14,6 @@ namespace LightsOutPuzzle.Common
             CreateGame(finished);
         }
 
-
         public Tile GetTile(int row, int column) =>
             _playingField.First(_ => _.Row == row && _.Column == column);
 
@@ -55,6 +54,9 @@ namespace LightsOutPuzzle.Common
         public IEnumerable<Tile> GetFlippedTiles() =>
             _playingField.Where(_ => _.ImageVisible);
 
+        public IEnumerable<Tile> GetHiddenTiles() =>
+            _playingField.Where(_ => !_.ImageVisible);
+
         public IEnumerable<Tile> HideAll()
         {
             _playingField.ForEach(_ => _.ImageVisible = false);
@@ -76,6 +78,17 @@ namespace LightsOutPuzzle.Common
         public static Game RandomGame() => new Game();
 
         public static Game FinishedGame() => new Game(true);
+
+        public Game UpdateGame(IEnumerable<Tile> tilesToUpdate)
+        {
+            foreach (var t in tilesToUpdate)
+            {
+                var replace = _playingField.First(_ => _.Row == t.Row && _.Column == t.Column);
+                _playingField.Remove(replace);
+                _playingField.Add(t);
+            }
+            return this;
+        }
 
         private void CreateGame(bool finished = false)
         {

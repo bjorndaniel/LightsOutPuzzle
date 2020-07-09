@@ -7,7 +7,7 @@ namespace LightsOutPuzzle.Xam.Views
 {
     public class TilePage : Grid
     {
-        private BoxView _background;
+        private Image _background;
         private Image _foreground;
 
         public int Column { get; }
@@ -18,11 +18,15 @@ namespace LightsOutPuzzle.Xam.Views
 
         public TilePage(int row, int column, string assemblyName)
         {
-            StyleId = "flip-container";
             Column = column;
             Row = row;
             var assembly = typeof(TilePage).GetTypeInfo().Assembly;
-            _background = new BoxView { Color = Constants.BACKSIZE_COLOR, RotationY = 90 };
+            _background = new Image
+            {
+                Source = ImageSource.FromResource($"{assemblyName}.Images.icon.png", assembly),
+                RotationY = 90,
+                BackgroundColor = Color.White
+            };
             _foreground = new Image
             {
                 RotationY = 0,
@@ -30,9 +34,7 @@ namespace LightsOutPuzzle.Xam.Views
                 BackgroundColor = Color.Transparent
 
             };
-            
-            _background.StyleId = "back";
-            _foreground.StyleId = "front";
+
             var tapFrame = CreateTapFrame();
             Children.Add(_background, 0, 0);
             Children.Add(_foreground, 0, 0);
@@ -50,8 +52,6 @@ namespace LightsOutPuzzle.Xam.Views
             {
                 await _background.RotateYTo(90, 200, Easing.CubicIn).ConfigureAwait(false);
                 await _foreground.RotateYTo(0, 200, Easing.CubicOut).ConfigureAwait(false);
-                _background.StyleId = "back";
-                _foreground.StyleId = "front";
                 FrontIsShowing = true;
             }
         }
@@ -68,8 +68,6 @@ namespace LightsOutPuzzle.Xam.Views
         {
             await _foreground.RotateYTo(-90, 400, Easing.CubicIn).ConfigureAwait(false);
             await _background.RotateYTo(0, 400, Easing.CubicOut).ConfigureAwait(false);
-            _background.StyleId = "front";
-            _foreground.StyleId = "back";
             FrontIsShowing = false;
         }
 

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{0701BD1E-31A3-48E6-81B9-9C5B00584909}</ProjectGuid>
+    <ProjectGuid>{9B7C5394-563A-4503-8C50-85EA0597B901}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LightsOutPuzzle.Fabulous.UWP</RootNamespace>
@@ -149,12 +149,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="FSharp.Core" Version="4.7.1" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LightsOutPuzzle.Fabulous\LightsOutPuzzle.Fabulous.fsproj">
-      <Project>{1CD136F7-6775-4FA5-B975-6D00CE732F23}</Project>
+      <Project>{01ef06ad-ded7-44b5-b521-3cd499fac32a}</Project>
       <Name>LightsOutPuzzle.Fabulous</Name>
     </ProjectReference>
   </ItemGroup>

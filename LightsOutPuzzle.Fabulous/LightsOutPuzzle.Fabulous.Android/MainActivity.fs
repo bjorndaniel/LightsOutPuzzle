@@ -19,11 +19,11 @@ type MainActivity() =
         FormsAppCompatActivity.TabLayoutResource <- Resources.Layout.Tabbar
         FormsAppCompatActivity.ToolbarResource <- Resources.Layout.Toolbar
         base.OnCreate (bundle)
-        
+
         Xamarin.Essentials.Platform.Init(this, bundle)
 
         Xamarin.Forms.Forms.Init (this, bundle)
-        
+
         let appcore  = new LightsOutPuzzle.Fabulous.App()
         this.LoadApplication (appcore)
 
