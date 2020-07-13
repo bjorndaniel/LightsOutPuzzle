@@ -8,3 +8,13 @@ abstract class GameEvent extends Equatable {
 }
 
 class StartGameEvent extends GameEvent {}
+
+class TileTappedEvent extends GameEvent {
+  final Tile tile;
+  const TileTappedEvent(this.tile);
+  List<Object> get props => [tile];
+}
+
+class RestartEvent extends GameEvent {
+  const RestartEvent();
+}

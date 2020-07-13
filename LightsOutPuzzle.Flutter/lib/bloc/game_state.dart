@@ -7,11 +7,18 @@ abstract class GameState extends Equatable {
   List<Object> get props => [];
 }
 
-class GameInitialState extends GameState {}
+class GameInitialState extends GameState {
+  const GameInitialState() : super();
+}
 
 class GameStartedState extends GameState {
-  // final Game game;
-  // const GameStartedState(this.game);
-  // @override
-  // List<Object> get props => [game];
+  const GameStartedState();
+}
+
+class GameCompletedState extends GameState {
+  const GameCompletedState();
+}
+
+class TileFlippedState extends GameState {
+  const TileFlippedState();
 }
