@@ -8,6 +8,8 @@ The goal is to do the list below:
 - Fabulous iOS/android/UWP **DONE**
 - Flutter **DONE**
 - Uno
+- Swift
+- Kotlin
 - Ooui Web Assembly
 - Vue with TypeScript
 - React
