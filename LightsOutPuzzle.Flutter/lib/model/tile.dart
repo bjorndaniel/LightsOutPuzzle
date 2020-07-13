@@ -9,7 +9,8 @@ class Tile {
   bool get hasBeenFlipped => previousState != imageVisible;
 
   Tile(this._row, this._column, {visible = false})
-      : this.imageVisible = visible;
+      : this.imageVisible = visible,
+        this.previousState = visible;
 
   void flip() {
     previousState = imageVisible;

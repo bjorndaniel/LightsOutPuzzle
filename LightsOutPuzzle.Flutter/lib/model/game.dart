@@ -38,6 +38,7 @@ class Game {
 
   void _createGame(bool isFinished) {
     var result = _getSolvableGame(isFinished);
+
     _playingField = result;
   }
 
@@ -60,8 +61,12 @@ class Game {
     var result = List<Tile>();
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 5; col++) {
-        result.add(
-            Tile(row, col, visible: isFinished || _random.nextInt(100) > 30));
+        var tile =
+            Tile(row, col, visible: isFinished || _random.nextInt(100) > 30);
+        if (!tile.imageVisible) {
+          tile.previousState = true;
+        }
+        result.add(tile);
       }
     }
     return result;
@@ -88,6 +93,11 @@ class Game {
       toFlip.add(_getTile(tile.row, tile.column + 1, game));
     }
     toFlip.forEach((_) => _.flip());
+    var reset = game.where(
+        (t) => !toFlip.any((f) => f.row == t.row && f.column == t.column));
+    reset.forEach((_) {
+      _.previousState = _.imageVisible;
+    });
     return toFlip;
   }
 

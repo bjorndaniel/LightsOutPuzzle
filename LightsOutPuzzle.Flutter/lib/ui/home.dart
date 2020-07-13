@@ -1,10 +1,29 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lightsoutpuzzleflutter/bloc/game_bloc.dart';
 import 'package:lightsoutpuzzleflutter/model/model.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:tuple/tuple.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final _cardKeys = List<Tuple2<Tuple2<int, int>, GlobalKey<FlipCardState>>>();
+
+  @override
+  void initState() {
+    super.initState();
+    for (var row = 0; row < 5; row++) {
+      for (var col = 0; col < 5; col++) {
+        _cardKeys.add(Tuple2(Tuple2(row, col), GlobalKey<FlipCardState>()));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,25 +141,40 @@ class Home extends StatelessWidget {
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 5; col++) {
         final tile = game.getTile(row, col);
+        final key = _cardKeys
+            .firstWhere((_) => _.item1.item1 == row && _.item1.item2 == col)
+            .item2;
         children.add(
           GestureDetector(
             onTap: () => game.isCompleted
                 ? null
                 : BlocProvider.of<GameBloc>(context).add(TileTappedEvent(tile)),
-            child: Container(
+            child: FlipCard(
+              key: key,
+              flipOnTouch: false,
+              front: Container(
                 height: 50,
                 width: 50,
                 color: Colors.white,
-                child: tile.imageVisible
-                    ? Image(
-                        image: AssetImage(
-                            'assets/images/row-${row + 1}-col-${col + 1}.jpg'),
-                      )
-                    : Image(
-                        image: AssetImage('assets/images/icon.png'),
-                      )),
+                child: Image(
+                  image: AssetImage(
+                      'assets/images/row-${row + 1}-col-${col + 1}.jpg'),
+                ),
+              ),
+              back: Container(
+                height: 50,
+                width: 50,
+                color: Colors.white,
+                child: Image(
+                  image: AssetImage('assets/images/icon.png'),
+                ),
+              ),
+            ),
           ),
         );
+        if (tile.hasBeenFlipped) {
+          key.currentState.toggleCard();
+        }
       }
     }
     return children;
