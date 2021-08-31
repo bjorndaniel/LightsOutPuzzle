@@ -4,13 +4,16 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,15 +22,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.lightsoutpuzzlejetpack.R.drawable.*
 import com.example.lightsoutpuzzlejetpack.ui.theme.LightsOutPuzzleJetpackTheme
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     val DarkColors = darkColors(
@@ -59,7 +64,8 @@ fun MainPage(){
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Lights out",
+            Text(
+                "Lights out",
                 fontSize = 36.sp,
                 color = MaterialTheme.colors.primary,
             )
@@ -71,14 +77,11 @@ fun MainPage(){
             Spacer(modifier = Modifier.height(14.dp))
             Box(
                 modifier = Modifier
-                    .height(250.dp)
-                    .fillMaxWidth()
-                    .background(Color(red = 0f, green = 1f, blue = 0f)),
+                    .height(300.dp)
+                    .width(300.dp),
 
             ){
-                Column(Modifier.background(Color(red=0f,green = 1f,blue = 0f))) {
-
-                }
+                GameGrid()
             }
             Spacer(modifier = Modifier.height(8.dp))
             Column(){
@@ -109,6 +112,74 @@ fun MainPage(){
     }
 }
 
+@ExperimentalFoundationApi
+@Composable
+fun GameGrid(){
+    val list = (1..25).map { it.toString() }
+
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(5),
+        content = {
+            items(list.size) { index ->
+               FlipCard(getColor())
+            }
+        }
+    )
+}
+@Composable
+fun FlipCard(color:Color) {
+    var rotated by remember { mutableStateOf(false) }
+    val rotation by animateFloatAsState(
+        targetValue = if (rotated) 180f else 0f,
+        animationSpec = tween(500)
+    )
+    val animateFront by animateFloatAsState(
+        targetValue = if (!rotated) 1f else 0f,
+        animationSpec = tween(100)
+    )
+    val animateBack by animateFloatAsState(
+        targetValue = if (rotated) 1f else 0f,
+        animationSpec = tween(100)
+    )
+    val animateColor by animateColorAsState(
+        targetValue = if (rotated) Color.Black else color,
+        animationSpec = tween(200)
+    )
+    Box(
+        Modifier.height(60.dp).width(60.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            Modifier
+                .graphicsLayer {
+                    rotationY = rotation
+                    cameraDistance = 8 * density
+                }
+                .clickable {
+                    rotated = !rotated
+                }.background(animateColor),
+        )
+        {
+            Column(
+                Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = if (rotated) "" else "Front",
+                    modifier = Modifier
+                        .graphicsLayer {
+                            rotationY = rotation
+                        })
+            }
+
+        }
+    }
+}
+fun getColor() : Color {
+    val rnd = Random()
+    val color = Color(255, rnd.nextInt(256), rnd.nextInt(256))
+    return color
+}
 
 @ExperimentalFoundationApi
 @Preview(name = "Light mode", showBackground = true)
