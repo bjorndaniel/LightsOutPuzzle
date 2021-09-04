@@ -9,23 +9,24 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.lightsoutpuzzlejetpack.R.drawable.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.lightsoutpuzzlejetpack.R.drawable.*
 import java.util.*
+import androidx.compose.foundation.ExperimentalFoundationApi as ExperimentalFoundationApi1
 
 class MainActivity : ComponentActivity() {
     val DarkColors = darkColors(
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
     val LightColors = lightColors(
         primary = Color(red = 0f, green = 0f, blue = 0f)
     )
-    @ExperimentalFoundationApi
+    @ExperimentalFoundationApi1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalFoundationApi
+@ExperimentalFoundationApi1
 @Composable
 fun MainPage(){
     val game = Game(isStarted = false)
@@ -105,7 +106,7 @@ fun MainPage(){
     }
 }
 
-@ExperimentalFoundationApi
+@ExperimentalFoundationApi1
 @Composable
 fun GameGrid(){
     val list = (0..24).map { it }
@@ -114,8 +115,8 @@ fun GameGrid(){
         cells = GridCells.Fixed(5)
     ) {
         items(list) { item ->
-            var resourceId = getResourceId(item)
-            var img = Image(
+            val resourceId = getResourceId(item)
+            val img = Image(
                 ImageBitmap.imageResource(id = resourceId),
                 contentDescription = "",
                 modifier = Modifier.height(60.dp).width(60.dp),
@@ -127,49 +128,49 @@ fun GameGrid(){
 }
 
 fun getResourceId(item:Int): Int {
-    var col = item%5
-    var row = item/5
+    val col: Int = item%5
+    val row = item/5
     when (row) {
-        0 -> when (col) {
-            0 -> return R.drawable.row_1_col_1
-            1 -> return R.drawable.row_1_col_2
-            2 -> return R.drawable.row_1_col_3
-            3 -> return R.drawable.row_1_col_4
+        0 -> return when (col) {
+            0 -> row_1_col_1
+            1 -> row_1_col_2
+            2 -> row_1_col_3
+            3 -> row_1_col_4
             else ->
-                return R.drawable.row_1_col_5
+                row_1_col_5
         }
-        1 -> when (col) {
-            0 -> return R.drawable.row_2_col_1
-            1 -> return R.drawable.row_2_col_2
-            2 -> return R.drawable.row_2_col_3
-            3 -> return R.drawable.row_2_col_4
+        1 -> return when (col) {
+            0 -> row_2_col_1
+            1 -> row_2_col_2
+            2 -> row_2_col_3
+            3 -> row_2_col_4
             else ->
-                return R.drawable.row_2_col_5
+                row_2_col_5
         }
-        2 -> when (col) {
-            0 -> return R.drawable.row_3_col_1
-            1 -> return R.drawable.row_3_col_2
-            2 -> return R.drawable.row_3_col_3
-            3 -> return R.drawable.row_3_col_4
+        2 -> return when (col) {
+            0 -> row_3_col_1
+            1 -> row_3_col_2
+            2 -> row_3_col_3
+            3 -> row_3_col_4
             else ->
-                return R.drawable.row_3_col_5
+                row_3_col_5
         }
-        3 -> when (col) {
-            0 -> return R.drawable.row_4_col_1
-            1 -> return R.drawable.row_4_col_2
-            2 -> return R.drawable.row_4_col_3
-            3 -> return R.drawable.row_4_col_4
+        3 -> return when (col) {
+            0 -> row_4_col_1
+            1 -> row_4_col_2
+            2 -> row_4_col_3
+            3 -> row_4_col_4
             else ->
-                return R.drawable.row_4_col_5
+                row_4_col_5
         }
         else ->
-            when (col) {
-                0 -> return R.drawable.row_5_col_1
-                1 -> return R.drawable.row_5_col_2
-                2 -> return R.drawable.row_5_col_3
-                3 -> return R.drawable.row_5_col_4
+            return when (col) {
+                0 -> row_5_col_1
+                1 -> row_5_col_2
+                2 -> row_5_col_3
+                3 -> row_5_col_4
                 else ->
-                    return R.drawable.row_5_col_5
+                    row_5_col_5
             }
 
     }
@@ -225,22 +226,16 @@ fun FlipCard(image: Unit) {
                             .graphicsLayer {
                                 rotationY = rotation
                             })
-                } else{
+                } else {
                     image
                 }
-
             }
 
         }
     }
 }
-fun getColor() : Color {
-    val rnd = Random()
-    val color = Color(255, rnd.nextInt(256), rnd.nextInt(256))
-    return color
-}
 
-@ExperimentalFoundationApi
+@ExperimentalFoundationApi1
 @Preview(name = "Light mode", showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES,
 showBackground = true,
