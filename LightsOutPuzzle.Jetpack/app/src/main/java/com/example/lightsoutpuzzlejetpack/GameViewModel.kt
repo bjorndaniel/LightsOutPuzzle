@@ -22,6 +22,7 @@ class GameViewModel : ViewModel()  {
         game = Game(isFinished = false)
         game.isStarted = true
         isStarted.value = true
+        isWon.value = false
         playingField.value = game.playingField
     }
 
