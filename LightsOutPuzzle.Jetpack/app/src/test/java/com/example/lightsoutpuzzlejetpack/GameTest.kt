@@ -6,12 +6,6 @@ import org.junit.Assert.*
 class GameTest {
 
     @Test
-    fun canStartGame() {
-        val game = Game(isFinished = false)
-        assertEquals(true, game.solveable())
-    }
-
-    @Test
     fun canGetTile() {
         val game = Game(isFinished = false)
         val tile = game.getTile(2,3)
