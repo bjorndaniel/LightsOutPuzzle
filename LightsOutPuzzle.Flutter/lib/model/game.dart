@@ -23,7 +23,7 @@ class Game {
     _createGame(isFinished);
   }
 
-  bool get isCompleted =>
+  bool get isCompleted =>[]
       _playingField.where((_) => !_.imageVisible).length == 0;
 
   bool get solveable => _solveable(_playingField);

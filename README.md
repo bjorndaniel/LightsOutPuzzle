@@ -14,5 +14,6 @@ The goal is to do the list below:
 - Vue with TypeScript
 - React
 - Angular
+- Jetpack Compose **DONE**
 
 You can try the Blazor version here: [Lights out Blazor](https://lights-out-puzzle.bjorndaniel.se)
