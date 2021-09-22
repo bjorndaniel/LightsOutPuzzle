@@ -8,12 +8,12 @@ The goal is to do the list below:
 - Fabulous iOS/android/UWP **DONE**
 - Flutter **DONE**
 - Uno
-- Swift
-- Kotlin
+- SwiftUI
 - Ooui Web Assembly
 - Vue with TypeScript
-- React
-- Angular
+- React with TypeScript
+- Angular with TypeScript
 - Jetpack Compose **DONE**
+- SolidJS with TypeScript
 
 You can try the Blazor version here: [Lights out Blazor](https://lights-out-puzzle.bjorndaniel.se)
