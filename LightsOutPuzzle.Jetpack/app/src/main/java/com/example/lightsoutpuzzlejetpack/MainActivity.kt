@@ -1,5 +1,6 @@
 package com.example.lightsoutpuzzlejetpack
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +10,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -51,6 +52,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi1
 @Composable
@@ -139,10 +141,10 @@ fun MainPage(gameViewModel: GameViewModel) {
 fun GameGrid(gameViewModel: GameViewModel) {
     val list = (0..24).map { it }
     LazyVerticalGrid(
-        cells = GridCells.Fixed(5)
+        columns = GridCells.Fixed(5)
     ) {
-        items(gameViewModel.playingField.value) { item ->
-            FlipCard(gameViewModel, item)
+        items(list.count()) { item ->
+            FlipCard(gameViewModel,  gameViewModel.playingField.value[item])
         }
     }
 }

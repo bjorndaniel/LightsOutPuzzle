@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.lightsoutpuzzlejetpack"
+        applicationId "se.bjorndaniel.lightsout"
         minSdk 21
-        targetSdk 31
-        versionCode 1
+        targetSdk 34
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -31,20 +31,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
     buildFeatures {
         compose true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerVersion '1.5.4'
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.example.lightsoutpuzzlejetpack'
+    buildToolsVersion '34.0.0'
 }
 
 dependencies {
