@@ -1,104 +1,99 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace LightsOutPuzzle.Common;
 
-namespace LightsOutPuzzle.Common
+public class Game
 {
-    public class Game
+    private static readonly Random _random = new ();
+    private List<Tile> _playingField;
+
+    internal Game(bool finished = false)
     {
-        private static Random _random = new Random();
-        private List<Tile> _playingField;
+        CreateGame(finished);
+    }
 
-        internal Game(bool finished = false)
+    public Tile GetTile(int row, int column) =>
+        _playingField.First(_ => _.Row == row && _.Column == column);
+
+    /// <summary>
+    /// Flips the tile and all adjacent tiles (horizontally and vertically)
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="column"></param>
+    public IEnumerable<Tile> FlipTile(int row, int column)
+    {
+        var toFlip = new List<Tile>();
+        var tile = GetTile(row, column);
+        toFlip.Add(tile);
+        //The field above
+        if (tile.Row - 1 >= 0)
         {
-            CreateGame(finished);
+            toFlip.Add(GetTile(tile.Row - 1, tile.Column));
         }
-
-        public Tile GetTile(int row, int column) =>
-            _playingField.First(_ => _.Row == row && _.Column == column);
-
-        /// <summary>
-        /// Flips the tile and all adjacent tiles (horizontally and vertically)
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        public IEnumerable<Tile> FlipTile(int row, int column)
+        // The field underneath
+        if (tile.Row + 1 < 5)
         {
-            var toFlip = new List<Tile>();
-            var tile = GetTile(row, column);
-            toFlip.Add(tile);
-            //The field above
-            if (tile.Row - 1 >= 0)
-            {
-                toFlip.Add(GetTile(tile.Row - 1, tile.Column));
-            }
-            // The field underneath
-            if (tile.Row + 1 < 5)
-            {
-                toFlip.Add(GetTile(tile.Row + 1, tile.Column));
-            }
-            // The field to the left
-            if (tile.Column - 1 >= 0)
-            {
-                toFlip.Add(GetTile(tile.Row, tile.Column - 1));
-            }
-            // The field to the right
-            if (tile.Column + 1 < 5)
-            {
-                toFlip.Add(GetTile(tile.Row, tile.Column + 1));
-            }
-            toFlip.ForEach(_ => _.Flip());
-            return toFlip;
+            toFlip.Add(GetTile(tile.Row + 1, tile.Column));
         }
-
-        public IEnumerable<Tile> GetFlippedTiles() =>
-            _playingField.Where(_ => _.ImageVisible);
-
-        public IEnumerable<Tile> GetHiddenTiles() =>
-            _playingField.Where(_ => !_.ImageVisible);
-
-        public IEnumerable<Tile> HideAll()
+        // The field to the left
+        if (tile.Column - 1 >= 0)
         {
-            _playingField.ForEach(_ => _.ImageVisible = false);
-            return _playingField;
+            toFlip.Add(GetTile(tile.Row, tile.Column - 1));
         }
-
-        public IEnumerable<Tile> ShowAll()
+        // The field to the right
+        if (tile.Column + 1 < 5)
         {
-            _playingField.ForEach(_ => _.ImageVisible = true);
-            return _playingField;
+            toFlip.Add(GetTile(tile.Row, tile.Column + 1));
         }
+        toFlip.ForEach(_ => _.Flip());
+        return toFlip;
+    }
 
-        public bool GameCompleted() =>
-            _playingField.All(_ => _.ImageVisible);
+    public IEnumerable<Tile> GetFlippedTiles() =>
+        _playingField.Where(_ => _.ImageVisible);
 
-        public IEnumerable<Tile> GetAll() =>
-            _playingField;
+    public IEnumerable<Tile> GetHiddenTiles() =>
+        _playingField.Where(_ => !_.ImageVisible);
 
-        public static Game RandomGame() => new Game();
+    public IEnumerable<Tile> HideAll()
+    {
+        _playingField.ForEach(_ => _.ImageVisible = false);
+        return _playingField;
+    }
 
-        public static Game FinishedGame() => new Game(true);
+    public IEnumerable<Tile> ShowAll()
+    {
+        _playingField.ForEach(_ => _.ImageVisible = true);
+        return _playingField;
+    }
 
-        public Game UpdateGame(IEnumerable<Tile> tilesToUpdate)
+    public bool GameCompleted() =>
+        _playingField.All(_ => _.ImageVisible);
+
+    public IEnumerable<Tile> GetAll() =>
+        _playingField;
+
+    public static Game RandomGame() => new ();
+
+    public static Game FinishedGame() => new (true);
+
+    public Game UpdateGame(IEnumerable<Tile> tilesToUpdate)
+    {
+        foreach (var t in tilesToUpdate)
         {
-            foreach (var t in tilesToUpdate)
+            var replace = _playingField.First(_ => _.Row == t.Row && _.Column == t.Column);
+            _playingField.Remove(replace);
+            _playingField.Add(t);
+        }
+        return this;
+    }
+
+    private void CreateGame(bool finished = false)
+    {
+        _playingField = [];
+        for (int row = 0; row < 5; row++)
+        {
+            for (int col = 0; col < 5; col++)
             {
-                var replace = _playingField.First(_ => _.Row == t.Row && _.Column == t.Column);
-                _playingField.Remove(replace);
-                _playingField.Add(t);
-            }
-            return this;
-        }
-
-        private void CreateGame(bool finished = false)
-        {
-            _playingField = new List<Tile>();
-            for (int row = 0; row < 5; row++)
-            {
-                for (int col = 0; col < 5; col++)
-                {
-                    _playingField.Add(new Tile(row, col, finished || _random.Next(0, 100) > 30));
-                }
+                _playingField.Add(new Tile(row, col, finished || _random.Next(0, 100) > 30));
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using LightsOutPuzzle.Common
 @inject IToastService Toast
 
 <div class="row">
@@ -17,13 +16,13 @@
                 <tr>
                     @for (int col = 0; col < 5; col++)
                     {
-                        var tile = CurrentGame.GetTile(row, col);
-                        <td class="tile" @onclick="@(() => FlipTile(tile))">
+                        var tile = CurrentGame?.GetTile(row, col);
+                        <td class="tile" @onclick="@(() => FlipTile(tile!))">
                             <div class="flip-container" id="@($"row-{row+1}-col-{col+1}")">
-                                <div class="@(tile.ImageVisible ? "back" : "front")">
+                                <div class="@(tile?.ImageVisible ?? false ? "back" : "front")">
                                     <!-- front content -->
                                 </div>
-                                <div class="@(tile.ImageVisible ? "front" : "back")">
+                                <div class="@(tile?.ImageVisible ?? false ? "front" : "back")">
                                     <img class="img-tile" src="@($"img/row-{row+1}-col-{col+1}.jpg")">
                                 </div>
                             </div>
@@ -36,7 +35,7 @@
 </div>
 <div class="row mt-1">
     <div class="col text-center">
-        <button class="btn btn-primary" @onclick="@StartGame">@ButtonText</button>
+        <button class="btn btn-primary" @onclick="StartGame">@ButtonText</button>
     </div>
 </div>
 <br />
@@ -57,10 +56,10 @@
         </p>
     </div>
 </div>
-@code{
-    Game CurrentGame { get; set; }
-    bool IsStarted { get; set; }
-    string ButtonText => IsStarted ? "Randomize and start over" : "Start game";
+@code {
+    private Game? CurrentGame { get; set; }
+    private bool IsStarted { get; set; }
+    private string ButtonText => IsStarted ? "Randomize and start over" : "Start game";
 
     protected override void OnInitialized()
     {
@@ -68,19 +67,20 @@
         CurrentGame.ShowAll();
     }
 
-    void StartGame()
+    private void StartGame()
     {
         CurrentGame = Game.RandomGame();
         IsStarted = true;
     }
-    void FlipTile(Tile tile)
+
+    private void FlipTile(Tile tile)
     {
         if (!IsStarted)
         {
             return;
         }
-        CurrentGame.FlipTile(tile.Row, tile.Column);
-        if (CurrentGame.GameCompleted())
+        CurrentGame?.FlipTile(tile.Row, tile.Column);
+        if (CurrentGame?.GameCompleted() ?? false)
         {
             IsStarted = false;
             Toast.ShowSuccess("Well done, the Avengers are proud!");
